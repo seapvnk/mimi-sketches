@@ -1,0 +1,2 @@
+SCREEN_SIZE = (1024, 640)
+WINDOW_TITLE = 'mimi'

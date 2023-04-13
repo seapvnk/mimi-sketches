@@ -6,6 +6,16 @@ FPS: int = 60
 
 class ClockManager:
     """Controll application state"""
+    _instance = None
+
+    @classmethod
+    def instance(_class):
+        """Return an instance of ImageLoader if there is one,
+           otherwise create an instance and returns it"""
+        if _class._instance is None:
+            _class._instance = _class()
+
+        return _class._instance
 
     def __init__(self):
         self.clock: pygame.time.Clock = pygame.time.Clock()

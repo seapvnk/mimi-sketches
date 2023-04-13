@@ -1,6 +1,6 @@
 import pygame
-from models.model import Model
-from models.person import Person
+from domain.models.model import Model
+from domain.models.person import Person
 from datetime import date
 
 class Player(Model):
@@ -9,6 +9,11 @@ class Player(Model):
     def __init__(self, uid: str, person: Person):
         self._id: str = uid
         self._person: Person = person
+
+    @property
+    def person(self) -> Person:
+        return self._person
         
     def render(self):
         self._person.render()
+

@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Callable, List
 from collections.abc import Iterator
 from uuid import uuid4
-from models.model import Model
+from domain.models.model import Model
 
 class ModelCollection(Iterator, Model):
     """Class to implement a collection for entities"""

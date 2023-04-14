@@ -1,6 +1,6 @@
 import pygame
 from config import SCREEN_SIZE, WINDOW_TITLE
-from application import ClockManager, EventHandler
+from application import ClockManager, EventHandler, Camera
 from application.controllers import MapController, PlayerController
 from domain.models import Player, Person
 
@@ -26,9 +26,13 @@ class Application():
             '2002-9-1',
             1.99
         )
-        player_person.set_position(pygame.math.Vector2(665.0, 233.0))
+        player_person.position = pygame.math.Vector2(665.0, 233.0)
         player = Player('teste', player_person) 
         self.player_controller: PlayerController = PlayerController(self.screen, player)
+        self.camera: Camera = Camera(
+            self.screen, 
+            self.player_controller.player
+        )
 
     def main_loop(self) -> None:
         """Application main loop"""
@@ -36,10 +40,15 @@ class Application():
         while True:
             self.event_handler.handle_events()
             dt = self.clock_manager.dt
+            
+            if pygame.MOUSEWHEEL in self.event_handler.events:
+                self.camera.update(
+                    self.event_handler.events[pygame.MOUSEWHEEL][0]
+                )
+
             self.player_controller.update()
             self.player_controller.handle_player_input()
             self.render()
-            pygame.display.update()
 
     def render(self) -> None:
         """Application rendering logic"""
@@ -47,5 +56,7 @@ class Application():
         self.map_controller.render_layers(6)
         self.player_controller.render()
         self.map_controller.render_layers()
+        self.camera.render()
+        pygame.display.update()
 
 

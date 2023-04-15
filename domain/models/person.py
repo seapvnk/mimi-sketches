@@ -4,7 +4,7 @@ from domain.models.model import Model
 from domain.models.person_appearence import PersonAppearence
 from datetime import date
 
-class Person(Model, pygame.sprite.Sprite):
+class Person(Model):
     """Class to represents a person in the application"""
 
     def __init__(
@@ -15,6 +15,8 @@ class Person(Model, pygame.sprite.Sprite):
         self.name: str = name
         self.last_name: str = last_name
         self.money: float = money
+
+        self.running: bool = False
 
         self.position: pygame.math.Vector2 = pygame.math.Vector2()
         self.direction: pygame.math.Vector2 = pygame.math.Vector2()
@@ -38,7 +40,8 @@ class Person(Model, pygame.sprite.Sprite):
             pass
 
         dt = ClockManager.instance().dt
-        self.position += self.direction * self.speed * dt 
+        speed = self.speed if not self.running else self.speed * 2
+        self.position += self.direction * speed * dt 
         self.rect.centery = round(self.position.y)
         self.rect.centerx = round(self.position.x)
 

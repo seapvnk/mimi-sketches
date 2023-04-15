@@ -1,6 +1,7 @@
 import pygame
 from application import EventHandler
 from domain.models import Player
+from infrastructure import ConfigLoader 
 
 class PlayerController:
     """Class to control the current player instance"""
@@ -11,6 +12,7 @@ class PlayerController:
         self.status: str = 'DOWN'
         self.direction: pygame.math.Vector2 = pygame.math.Vector2()
         self.running: bool = False
+        self._key_map: dict = ConfigLoader.instance().load('default_keymap')
 
     def update(self) -> None:
         """Update player's person"""
@@ -20,34 +22,36 @@ class PlayerController:
         """Render player's person"""
         self.player.render()
 
+    def _available_keys(self, pressed: list) -> list:
+        """Returns only available pressed keys"""
+        key_filter = lambda key: pressed[pygame.key.key_code(key)]
+        available = filter(key_filter, self._key_map.keys())
+
+        return list(map(lambda key: self._key_map[key], available))
+
+    def _reflect_keyboard(self, obj: dict) -> None:
+        """Set keyboard config attributes to instance"""
+        for prop in obj: 
+            self._reflect_keyboard_key(prop, obj[prop])
+
+    def _reflect_keyboard_key(self, prop, val) -> None:
+        """Set a keyboard key attributes to instance"""
+        if type(val) is list and len(val) == 2: 
+            val = pygame.math.Vector2(val)
+
+        self.__dict__[prop] = val
+
     def handle_player_input(self) -> None:
         """Handle inputs from player to control player's person"""
-        keys = pygame.key.get_pressed()
         self.direction = pygame.math.Vector2()
-
-        if keys[pygame.K_d]:
-            self.running = True
-            self.direction.x = 1
-            self.status = 'RIGHT'
-        elif keys[pygame.K_a]:
-            self.running = True
-            self.direction.x = -1
-            self.status = 'LEFT'
-        elif keys[pygame.K_s]:
-            self.running = True
-            self.direction.y = 1
-            self.status = 'DOWN'
-        elif keys[pygame.K_w]:
-            self.running = True
-            self.direction.y = -1
-            self.status = 'UP'
-        else:
-            self.running = False
-
-        animation = f'PERSON_IDLE_{self.status}'
-        if self.running:
-            animation = f'PERSON_RUN_{self.status}'
+        self.running, self.moving = False, False
+        self.animation = f'PERSON_IDLE_{self.status}'
         
+        keys = self._available_keys(pygame.key.get_pressed())
+        for key in sorted(keys, key=lambda k: k['priority']):
+            self._reflect_keyboard(key)
+
         self.player.person.direction = self.direction
-        self.player.person.action = animation
+        self.player.person.running = self.running
+        self.player.person.action = self.animation
 

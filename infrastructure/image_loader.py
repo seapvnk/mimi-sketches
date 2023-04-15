@@ -33,4 +33,3 @@ class ImageLoader:
         """Unload image"""
         del self._references[img_path]
 
-

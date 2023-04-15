@@ -1,1 +1,2 @@
 from infrastructure.image_loader import ImageLoader
+from infrastructure.config_loader import ConfigLoader

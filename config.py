@@ -1,6 +1,8 @@
 SCREEN_SIZE = (1024, 640)
 WINDOW_TITLE = 'mimi'
 
+COLLISION_LAYERS = [2, 3, 4]
+
 PERSON_ANIMATIONS = [
     # idle
     ('PERSON_IDLE_RIGHT', ((0, 80), 5), 0.3),

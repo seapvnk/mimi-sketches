@@ -27,7 +27,7 @@ class Application():
             '2002-9-1',
             1.99
         )
-        player_person.body.position = pygame.math.Vector2(665.0, 233.0)
+        player_person.body.position = pygame.math.Vector2(685.0, 233.0)
         player = Player('teste', player_person) 
         self.player_controller: PlayerController = PlayerController(self.screen, player)
         self.camera: Camera = Camera(
@@ -47,6 +47,9 @@ class Application():
                     self.event_handler.events[pygame.MOUSEWHEEL][0]
                 )
 
+            self.player_controller.player.person.body.update(
+                self.map_controller.collision_mask
+            )
             self.player_controller.update()
             self.player_controller.handle_player_input()
             self.render()

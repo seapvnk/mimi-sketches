@@ -1,7 +1,7 @@
 import pygame
 from config import SCREEN_SIZE, WINDOW_TITLE
 from application import ClockManager, EventHandler, Camera
-from application.controllers import MapController
+from domain.map import MapController
 from domain.player import Player, PlayerController
 from domain.person import Person
 
@@ -54,9 +54,9 @@ class Application():
     def render(self) -> None:
         """Application rendering logic"""
         self.screen.fill((0, 0, 0))
-        self.map_controller.render_layers(6)
+        self.map_controller.render(6)
         self.player_controller.render()
-        self.map_controller.render_layers()
+        self.map_controller.render(6, self.map_controller.last_layer)
         self.camera.render()
         pygame.display.update()
 

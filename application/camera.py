@@ -1,7 +1,7 @@
 import pygame
 from config import SCREEN_SIZE
 from application import SpriteSheet
-from domain.models import Player
+from domain.player import Player
 
 MAX_ZOOM = 100
 MIN_ZOOM = 38

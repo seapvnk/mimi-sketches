@@ -1,8 +1,9 @@
 import pygame
 from config import SCREEN_SIZE, WINDOW_TITLE
 from application import ClockManager, EventHandler, Camera
-from application.controllers import MapController, PlayerController
-from domain.models import Player, Person
+from application.controllers import MapController
+from domain.player import Player, PlayerController
+from domain.person import Person
 
 class Application():
     """Root class to handle application logic"""
@@ -26,7 +27,7 @@ class Application():
             '2002-9-1',
             1.99
         )
-        player_person.position = pygame.math.Vector2(665.0, 233.0)
+        player_person.body.position = pygame.math.Vector2(665.0, 233.0)
         player = Player('teste', player_person) 
         self.player_controller: PlayerController = PlayerController(self.screen, player)
         self.camera: Camera = Camera(

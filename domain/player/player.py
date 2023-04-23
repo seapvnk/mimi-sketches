@@ -1,6 +1,6 @@
 import pygame
-from domain.models.model import Model
-from domain.models.person import Person
+from domain.shared.model import Model
+from domain.person import Person
 from datetime import date
 
 class Player(Model):

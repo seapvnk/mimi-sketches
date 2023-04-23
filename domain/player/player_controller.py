@@ -1,6 +1,6 @@
 import pygame
 from application import EventHandler
-from domain.models import Player
+from domain.player.player import Player
 from infrastructure import ConfigLoader 
 
 class PlayerController:
@@ -51,7 +51,7 @@ class PlayerController:
         for key in sorted(keys, key=lambda k: k['priority']):
             self._reflect_keyboard(key)
 
-        self.player.person.direction = self.direction
-        self.player.person.running = self.running
+        self.player.person.body.direction = self.direction
+        self.player.person.body.speed_increase = self.running
         self.player.person.action = self.animation
 

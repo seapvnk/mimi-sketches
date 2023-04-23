@@ -2,9 +2,9 @@ import pygame
 from config import PERSON_ANIMATIONS
 from infrastructure import ImageLoader
 from application import SpriteSheet, Animation
-from domain.models.model import Model
+from domain.shared.model import Model
 
-class PersonAppearence(Model):
+class Appearence(Model):
     """Represents person's appearence in the game and generate person image"""
 
     def __init__(self, uid: str):

@@ -44,7 +44,7 @@ class PlayerController:
     def handle_player_input(self) -> None:
         """Handle inputs from player to control player's person"""
         self.direction = pygame.math.Vector2()
-        self.running, self.moving = False, False
+        self.ghost, self.running, self.moving = False, False, False
         self.animation = f'PERSON_IDLE_{self.status}'
         
         keys = self._available_keys(pygame.key.get_pressed())

@@ -17,7 +17,14 @@ class Person(Model):
 
         year_birthday, month_birthday, day_birthday = list(map(int, birthday.split('-')))
         self.birthday: date = date(year_birthday, month_birthday, day_birthday)
-        self.appearence = Appearence('aa')
+        self.appearence = Appearence(
+            '1234',
+            'Body_32x32_06.png',
+            'Eyes_32x32_05.png',
+            'Hairstyle_04_32x32_05.png',
+            'Outfit_05_32x32_02.png',
+            'Accessory_09_Zombie_Brain_32x32_03.png'
+        )
 
         self._surface: pygame.surface.Surface = surface
         self.action: str = 'PERSON_RUN_DOWN'

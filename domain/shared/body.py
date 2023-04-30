@@ -1,6 +1,8 @@
 import pygame
 from application import ClockManager
 
+COLLISION_TOLERANCE = 410
+
 class Body:
     """Class to represent a body of an entity"""
     
@@ -13,6 +15,7 @@ class Body:
         self.speed: float = speed
         self.max_speed: float = max_speed if max_speed > speed else speed * 2
         self.speed_increase: bool = False
+        self.ghost: bool = False
 
     @property
     def x(self):
@@ -28,11 +31,10 @@ class Body:
         dt = ClockManager.instance().dt
         n_position = self.position + self.direction * speed * dt
         overlap_area = world.overlap_area(self.shape, (n_position.x, n_position.y))
-        tolerance = 410
-
-        if overlap_area == 0:
+        
+        if overlap_area == 0 or self.ghost:
             self.position = n_position
-        elif overlap_area < tolerance:
+        elif overlap_area < COLLISION_TOLERANCE:
             n_position.x = (self.position.x + n_position.x) / 2
             n_position.y = (self.position.y + n_position.y) / 2
         

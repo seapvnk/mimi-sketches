@@ -4,6 +4,7 @@ from application import ClockManager, EventHandler, Camera
 from domain.map import MapController
 from domain.player import Player, PlayerController
 from domain.person import Person
+from infrastructure import Socket
 
 class Application():
     """Root class to handle application logic"""
@@ -11,6 +12,9 @@ class Application():
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(WINDOW_TITLE)
+        
+        #self.socket = Socket()
+        self.debug_font = pygame.font.SysFont(None, 16)
         self.screen: pygame.surface.Surface = pygame.display.set_mode(SCREEN_SIZE)
 
         self.event_handler: EventHandler = EventHandler()
@@ -37,8 +41,10 @@ class Application():
 
     def main_loop(self) -> None:
         """Application main loop"""
+        #print(self.socket.read())
 
-        while True:
+        while 1:
+            #self.socket.send('ping')
             self.event_handler.handle_events()
             dt = self.clock_manager.dt
             
@@ -54,6 +60,20 @@ class Application():
             self.player_controller.handle_player_input()
             self.render()
 
+    def debug_info(self) -> None:
+        """Display debug information"""
+        color = pygame.Color(50, 255, 50, 150)
+        font = self.debug_font
+        screen = self.screen
+        rowX, rowY = 20, 20
+
+        print_debug = lambda t, row: screen.blit(
+            font.render(t, True, color),
+            (rowX, rowY * row)
+        )
+
+        print_debug(f'fps: {self.clock_manager.fps}', 1)
+
     def render(self) -> None:
         """Application rendering logic"""
         self.screen.fill((0, 0, 0))
@@ -61,6 +81,10 @@ class Application():
         self.player_controller.render()
         self.map_controller.render(6, self.map_controller.last_layer)
         self.camera.render()
+        
+        if True:
+            self.debug_info()
+
         pygame.display.update()
 
 

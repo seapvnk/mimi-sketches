@@ -21,6 +21,10 @@ class ClockManager:
         self.clock: pygame.time.Clock = pygame.time.Clock()
 
     @property
+    def fps(self):
+        return self.clock.tick()
+
+    @property
     def dt(self):
         return self.clock.tick(FPS) / CLOCKS_TO_GAME_PHYSICS_DT
 

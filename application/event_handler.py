@@ -4,6 +4,7 @@ import sys
 class EventHandler():
     """Application event loop handler"""
     def __init__(self):
+        pygame.event.set_allowed([pygame.QUIT])
         self.events: dict = {}
 
     def handle_events(self) -> None:

@@ -1,6 +1,7 @@
 import pygame
 from application import ClockManager
-from domain.shared import Model, Body
+from domain.shared import Model
+from domain.body import Body
 from domain.person.appearence import Appearence
 from datetime import date
 
@@ -36,7 +37,7 @@ class Person(Model):
             pygame.transform.scale(image, (28, 60))
         )
 
-        self.body = Body(self.collision_mask, 200, 700)
+        self.body = Body(self.collision_mask, 400, 700)
 
     def update(self) -> None:
         """Update person"""

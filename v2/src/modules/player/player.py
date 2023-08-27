@@ -19,7 +19,7 @@ class Player:
     
     def _init_joystick(self):
         """
-            Initialize joystick
+        Initialize joystick
         """
 
         pg.joystick.init()

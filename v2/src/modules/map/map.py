@@ -9,6 +9,4 @@ class Map:
 
     def __init__(self, uid: int):
         self.id: int = uid
-        self.collision_mask: pg.Surface = None
-        self.background: Spritesheet = None
-        self.foreground: Spritesheet = None
+        self.name: str = ""
